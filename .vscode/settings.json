@@ -1,0 +1,9 @@
+{
+  "python.pythonPath": "/Users/jeyongkim/.local/share/virtualenvs/ydmarket-EOKMGNgf/bin/python",
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": null,
+  "python.formatting.provider": "black",
+  "python.linting.flake8Args": ["--max-line-length=88"]
+}
