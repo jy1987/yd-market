@@ -11,3 +11,11 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ("customs", {"fields": ("avatar", "gender", "superhost")}),
     )
+
+    list_display = (
+        "username",
+        "first_name",
+        "last_name",
+        "gender",
+        "superhost",
+    )

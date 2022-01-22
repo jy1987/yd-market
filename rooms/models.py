@@ -1,7 +1,43 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as user_models
+
+
+class AbstractItem(core_models.TimeStampedModel):
+
+    """abstract item"""
+
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.name
+
+
+class ItemColor(AbstractItem):
+    class Meta:
+        verbose_name = "Item Color"
+        ordering = ["name"]
+
+
+class Nation(AbstractItem):
+    class Meta:
+        ordering = ["name"]
+
+
+class Photo(core_models.TimeStampedModel):
+
+    caption = models.CharField(max_length=20)
+    file = models.ImageField()
+    room = models.ForeignKey("Room", related_name="photos", on_delete=CASCADE)
+
+    def __str__(self):
+        return self.caption
+
 
 # Create your models here.
 class Room(core_models.TimeStampedModel):
@@ -10,32 +46,32 @@ class Room(core_models.TimeStampedModel):
 
     """nation"""
 
-    USA = "usa"
-    JAPAN = "japan"
-    CHINA = "china"
-    HOKONG = "hokong"
-    EU = "europe"
+    미국 = "미국"
+    일본 = "일본"
+    중국 = "중국"
+    홍콩 = "홍콩"
+    유럽 = "유럽"
 
     NATION_CHOICE = (
-        (USA, "미국"),
-        (JAPAN, "일본"),
-        (CHINA, "중국"),
-        (HOKONG, "홍콩"),
-        (EU, "유럽"),
+        (미국, "미국"),
+        (일본, "일본"),
+        (중국, "중국"),
+        (홍콩, "홍콩"),
+        (유럽, "유럽"),
     )
 
     """brand"""
 
-    NIKE = "nike"
-    DIOR = "dior"
-    ADIDAS = "adidas"
-    CUGGI = "cuggi"
+    나이키 = "나이키"
+    디올 = "디올"
+    아디다스 = "아디다스"
+    구찌 = "구찌"
 
     BRAND_CHOICE = (
-        (NIKE, "나이키"),
-        (DIOR, "디올"),
-        (ADIDAS, "아디다스"),
-        (CUGGI, "구찌"),
+        (나이키, "나이키"),
+        (디올, "디올"),
+        (아디다스, "아디다스"),
+        (구찌, "구찌"),
     )
 
     """categories"""
@@ -70,7 +106,9 @@ class Room(core_models.TimeStampedModel):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=30)
     country = CountryField()
-    nation = models.CharField(max_length=20, choices=NATION_CHOICE, default="미국")
+    nation = models.ForeignKey(
+        Nation, related_name="rooms", on_delete=models.SET_NULL, null=True
+    )
     price = models.IntegerField()
     brand = models.CharField(max_length=20, choices=BRAND_CHOICE, default="나이키")
     categories = models.CharField(
@@ -83,4 +121,10 @@ class Room(core_models.TimeStampedModel):
         max_length=20, choices=DELIVERY_TERM_CHOICE, default="7일이내 배송"
     )
     discount_rate = models.IntegerField()
-    host = models.ForeignKey(user_models.User, on_delete=models.CASCADE)
+    color = models.ManyToManyField(ItemColor, related_name="rooms", blank=True)
+    host = models.ForeignKey(
+        user_models.User, related_name="rooms", on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.name
