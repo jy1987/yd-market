@@ -28,11 +28,14 @@ class Nation(AbstractItem):
     class Meta:
         ordering = ["name"]
 
+    def __str__(self):
+        return self.name
+
 
 class Photo(core_models.TimeStampedModel):
 
     caption = models.CharField(max_length=20)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=CASCADE)
 
     def __str__(self):
@@ -128,3 +131,15 @@ class Room(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def total_value(self):
+        reviews = self.reviews.all()
+        sum_review = 0
+        list = []
+        for review in reviews:
+            list.append(review)
+            sum_review += review.value
+        try:
+            return sum_review / len(list)
+        except:
+            return 0

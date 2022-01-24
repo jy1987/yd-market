@@ -1,13 +1,20 @@
 from django.contrib import admin
-from django.contrib.admin.decorators import display
+from django.utils.safestring import mark_safe
 from . import models
 
 # Register your models here.
+class PhotoInline(admin.TabularInline):
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
+    inlines = (PhotoInline,)
+
     list_display = (
         "name",
+        "get_thumbnail",
         "host",
         "description",
         "nation",
@@ -19,6 +26,7 @@ class RoomAdmin(admin.ModelAdmin):
         "discount_rate",
         "count_color",
         "count_photo",
+        "total_value",
     )
 
     ordering = (
@@ -38,6 +46,12 @@ class RoomAdmin(admin.ModelAdmin):
         "host__username",
     )
 
+    raw_id_fields = (
+        "host",
+        "nation",
+        "color",
+    )
+
     def count_color(self, obj):
         colors = []
         for color in obj.color.all():
@@ -47,6 +61,15 @@ class RoomAdmin(admin.ModelAdmin):
     def count_photo(self, obj):
 
         return obj.photos.count()
+
+    def get_thumbnail(self, obj):
+        # print(dir(obj.photos.all))
+        try:
+            photo = obj.photos.all()[0]
+
+            return mark_safe(f'<img width=50px, height=50px src="{photo.file.url}"/>')
+        except:
+            None
 
 
 @admin.register(models.ItemColor)
@@ -72,10 +95,18 @@ class ItemColorAdmin(admin.ModelAdmin):
 
 @admin.register(models.Nation)
 class NationAdmin(admin.ModelAdmin):
-    pass
+
+    list_display = ("__str__",)
 
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 
-    pass
+    list_display = (
+        "__str__",
+        "get_thumbnail",
+    )
+
+    def get_thumbnail(self, obj):
+        # print(dir(obj.file))
+        return mark_safe(f'<img width=100px, height=100px src="{obj.file.url}"/>')

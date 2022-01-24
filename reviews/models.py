@@ -14,7 +14,7 @@ class Review(core_models.TimeStampedModel):
         "users.User", related_name="reviews", on_delete=models.CASCADE
     )
     room = models.ForeignKey(
-        "rooms.Room", related_name="review", on_delete=models.CASCADE
+        "rooms.Room", related_name="reviews", on_delete=models.CASCADE
     )
 
     def __str__(self):

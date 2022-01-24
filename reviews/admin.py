@@ -9,4 +9,10 @@ class ReviewAdmin(admin.ModelAdmin):
 
     """review admin"""
 
-    list_display = ("__str__",)
+    list_display = (
+        "__str__",
+        "user",
+        "review",
+        "accuracy",
+        "value",
+    )
