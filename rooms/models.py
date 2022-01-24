@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import CASCADE, SET_NULL
 from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as user_models
@@ -30,6 +30,16 @@ class Nation(AbstractItem):
 
     def __str__(self):
         return self.name
+
+
+class Brand(AbstractItem):
+    class Meta:
+        ordering = ["name"]
+
+
+class Category(AbstractItem):
+    class Meta:
+        ordering = ["name"]
 
 
 class Photo(core_models.TimeStampedModel):
@@ -79,10 +89,10 @@ class Room(core_models.TimeStampedModel):
 
     """categories"""
 
-    CLOTHES = "clothes"
-    SHOES = "shoes"
-    COSMETIC = "cosmetic"
-    HEALTH = "health"
+    CLOTHES = "의류"
+    SHOES = "신발"
+    COSMETIC = "화장품"
+    HEALTH = "건강식품"
 
     CATEGORIES_CHOICE = (
         (CLOTHES, "의류"),
@@ -93,16 +103,16 @@ class Room(core_models.TimeStampedModel):
 
     """delivery condition"""
 
-    ABROAD = "abroad"
-    DOMESTIC = "domestic"
+    ABROAD = "해외배송"
+    DOMESTIC = "국내배송"
 
     DELIVERY_CHOICE = ((ABROAD, "해외배송"), (DOMESTIC, "국내배송"))
 
     """delivery term"""
 
-    THREE = "three"
-    SEVEN = "seven"
-    TEN = "ten"
+    THREE = "3일이내배송"
+    SEVEN = "7일이내배송"
+    TEN = "10일이내배송"
 
     DELIVERY_TERM_CHOICE = ((THREE, "3일이내 배송"), (SEVEN, "7일이내 배송"), (TEN, "10일이내 배송"))
 
@@ -113,16 +123,14 @@ class Room(core_models.TimeStampedModel):
         Nation, related_name="rooms", on_delete=models.SET_NULL, null=True
     )
     price = models.IntegerField()
-    brand = models.CharField(max_length=20, choices=BRAND_CHOICE, default="나이키")
-    categories = models.CharField(
-        max_length=20, choices=CATEGORIES_CHOICE, default="의류"
+    brand = models.ForeignKey(
+        Brand, related_name="rooms", on_delete=SET_NULL, null=True
     )
-    delivery_condition = models.CharField(
-        max_length=20, choices=DELIVERY_CHOICE, default="해외배송"
+    categories = models.ForeignKey(
+        Category, related_name="rooms", on_delete=SET_NULL, null=True
     )
-    delivery_term = models.CharField(
-        max_length=20, choices=DELIVERY_TERM_CHOICE, default="7일이내 배송"
-    )
+    delivery_condition = models.CharField(max_length=20, choices=DELIVERY_CHOICE)
+    delivery_term = models.CharField(max_length=20, choices=DELIVERY_TERM_CHOICE)
     discount_rate = models.IntegerField()
     color = models.ManyToManyField(ItemColor, related_name="rooms", blank=True)
     host = models.ForeignKey(
@@ -131,6 +139,11 @@ class Room(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.description = str.capitalize(self.description)
+        # print(self.brand)
+        super().save(*args, **kwargs)
 
     def total_value(self):
         reviews = self.reviews.all()

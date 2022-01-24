@@ -99,6 +99,18 @@ class NationAdmin(admin.ModelAdmin):
     list_display = ("__str__",)
 
 
+@admin.register(models.Brand)
+class BrandAdmin(admin.ModelAdmin):
+
+    list_display = ("__str__",)
+
+
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+
+    list_display = ("__str__",)
+
+
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 

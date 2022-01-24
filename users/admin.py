@@ -26,8 +26,6 @@ class CustomUserAdmin(UserAdmin):
     list_display = (
         "username",
         "user_img",
-        "first_name",
-        "last_name",
         "gender",
         "superhost",
     )
@@ -38,3 +36,7 @@ class CustomUserAdmin(UserAdmin):
             return mark_safe(f'<img width=50px, height=50px src="{obj.avatar.url}"/>')
         except:
             None
+
+    def save_model(self, request, obj, form, change):
+        print(obj, change, form)
+        super().save_model(request, obj, form, change)
