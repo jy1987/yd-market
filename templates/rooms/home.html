@@ -14,18 +14,17 @@ Home | dy networks
 {% endfor %} 
 <div>
     
-    {% if page is not 1 %}
-    <a href="/?page={{page|add:"-1"}}">Previous</a> 
+    {% if rooms.has_previous %}
+    <a href="/?page={{rooms.number|add:"-1"}}">Previous</a> 
     {% endif %}
-        
-<div>page : {{page}}/{{page_count}}</div>
-
-{% if page is not page_count %}
-<a href="/?page={{page|add:"1"}}">Next</a>   
-{% endif %}
     
+        
+    <div>page : {{rooms.number}}/{{rooms.paginator.num_pages}}</div>
 
-
+    {% if rooms.has_next %}
+    <a href="/?page={{rooms.number|add:"1"}}">Next</a>   
+    {% endif %}
+    
 </div>
 
 
