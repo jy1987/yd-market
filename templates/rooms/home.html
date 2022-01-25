@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+
+{% block page_name %} 
+
+Home | dy networks
+
+{% endblock page_name %} 
+
+{% block content %} 
+
+{% for room in rooms %} 
+
+{{room.name}}/{{room.host}}/{{room.nation}}
+{% endfor %} 
+<div>
+    
+    {% if page is not 1 %}
+    <a href="/?page={{page|add:"-1"}}">Previous</a> 
+    {% endif %}
+        
+<div>page : {{page}}/{{page_count}}</div>
+
+{% if page is not page_count %}
+<a href="/?page={{page|add:"1"}}">Next</a>   
+{% endif %}
+    
+
+
+</div>
+
+
+
+    
+
+{% endblock content %}

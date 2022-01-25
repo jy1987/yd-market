@@ -36,19 +36,25 @@ class Command(BaseCommand):
                 "categories": lambda x: random.choice(all_categories),
                 "host": lambda x: random.choice(all_users),
                 "nation": lambda x: random.choice(all_nation),
-                "price": lambda x: random.randint(1000000, 1500000),
+                "price": lambda x: random.randint(100000, 150000),
                 "discount_rate": lambda x: random.randint(5, 20),
                 "description": lambda x: fake.address(),
             },
         )
         created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
+        colors = room_models.ItemColor.objects.all()
         for pk in created_clean:
             room = room_models.Room.objects.get(pk=pk)
             for i in range(3, random.randint(5, 6)):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
-                    file=f"room_photos/iphone{random.randint(1, 2)}.jpeg",
+                    file=f"room_photos/clothe{random.randint(1, 2)}.jpeg",
                 )
+
+            for c in colors:
+                magic_number = random.randint(0, 10)
+                if magic_number % 2 == 0:
+                    room.color.add(c)
         self.stdout.write(self.style.SUCCESS(f"{number} rooms are created!"))

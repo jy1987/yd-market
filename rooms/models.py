@@ -153,6 +153,6 @@ class Room(core_models.TimeStampedModel):
             list.append(review)
             sum_review += review.value
         try:
-            return sum_review / len(list)
+            return round(sum_review / len(list), 1)
         except:
             return 0
