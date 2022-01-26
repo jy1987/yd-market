@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django_countries.fields import CountryField
@@ -144,6 +145,10 @@ class Room(core_models.TimeStampedModel):
         self.description = str.capitalize(self.description)
         # print(self.brand)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
 
     def total_value(self):
         reviews = self.reviews.all()

@@ -11,7 +11,8 @@ Home | dy networks
 
 {% for room in rooms %} 
     <div>
-    {{room.name}}/{{room.host}}/{{room.nation}}--{{sell}}
+        <a href="{% url "rooms:detail" room.pk %}">{{room.name}}/{{room.host}}/{{room.nation}}--{{sell}}</a>
+    
     </div>
 {% endfor %} 
 

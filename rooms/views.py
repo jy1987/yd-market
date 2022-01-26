@@ -1,6 +1,8 @@
 from django.views.generic.list import ListView
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import Http404
+from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import EmptyPage, Paginator
 from rooms import models as room_models
 
@@ -18,3 +20,13 @@ class HomeView(ListView):
         sell = "팝니다"
         context["sell"] = sell
         return context
+
+
+def room_detail(request, pk):
+    try:
+        room = room_models.Room.objects.get(pk=pk)
+        # print(dir(room))
+        return render(request, "rooms/room_detail.html", context={"room": room})
+    except ObjectDoesNotExist:
+        return redirect(reverse("core:home"))
+        # raise Http404()

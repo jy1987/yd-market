@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% block page_name %} 
+
+Home | dy networks
+
+{% endblock page_name %} 
+
+{% block content %} 
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h1 style="background-color: tomato;">{{room.name}}</h1>
+    <h2>{{room.brand}}</h2>
+    <p>{{room.description}}</p>
+    <h4>{{room.price}}원</h4>
+    <h4>카테고리:{{room.categories}}</h4>
+    <h4>{{room.delivery_condition}}</h4>
+    <h4>{{room.delivery_term}}</h4>
+    <h4>{{room.host}}</h4>
+    
+    <h4>Color</h4>
+        {% for color in room.color.all %}
+        <ul>
+            <li>{{color}}</li>
+        </ul>
+    {% endfor %}
+    
+    
+
+</div>
+
+    
+
+{% endblock %} 
