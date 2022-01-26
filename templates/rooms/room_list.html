@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+
+{% block page_name %} 
+
+Home | dy networks
+
+{% endblock page_name %} 
+
+{% block content %} 
+
+
+{% for room in rooms %} 
+    <div>
+    {{room.name}}/{{room.host}}/{{room.nation}}--{{sell}}
+    </div>
+{% endfor %} 
+
+
+<div>
+    
+    {% if page_obj.has_previous %}
+    <a href="/?page={{page_obj.number|add:"-1"}}">Previous</a> 
+    {% endif %}
+    
+        
+    <div>page : {{page_obj.number}}/{{page_obj.paginator.num_pages}}</div>
+
+    {% if page_obj.has_next %}
+    <a href="/?page={{page_obj.number|add:"1"}}">Next</a>   
+    {% endif %}
+    
+</div>
+
+
+
+    
+
+{% endblock content %}

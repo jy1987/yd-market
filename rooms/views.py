@@ -1,36 +1,20 @@
-from django.http.response import HttpResponseNotAllowed
-from math import ceil
-from django.shortcuts import render
+from django.views.generic.list import ListView
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage, Paginator
 from rooms import models as room_models
 
 # Create your views here.
+class HomeView(ListView):
 
+    model = room_models.Room
+    paginate_by = 16
+    ordering = "created"
+    paginate_orphans = 8
+    context_object_name = "rooms"
 
-def all_rooms(request):
-    # print(vars(request))
-    page = request.GET.get("page", default=1)
-    rooms_list = room_models.Room.objects.all()
-    paginator = Paginator(rooms_list, 16)
-    rooms = paginator.get_page(page)
-    print(vars(rooms.paginator))
-    return render(request, "rooms/home.html", context={"rooms": rooms})
-    """
-    page = int(page or 1)
-    page_size = 10
-    limit = page * page_size
-    offset = (page - 1) * page_size
-    page_count = ceil(room_models.Room.objects.count() / page_size)
-    rooms = room_models.Room.objects.all()[offset:limit]
-    return render(
-        request,
-        "rooms/home.html",
-        context={
-            "rooms": rooms,
-            "page": page,
-            "page_count": page_count,
-            "page_range": range(1, page_count + 1),
-        },
-    )
-    """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sell = "팝니다"
+        context["sell"] = sell
+        return context
