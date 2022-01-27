@@ -111,6 +111,18 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ("__str__",)
 
 
+@admin.register(models.DeliveryFrom)
+class DeliveryFromAdmin(admin.ModelAdmin):
+
+    list_display = ("__str__",)
+
+
+@admin.register(models.DeliveryTerm)
+class DeliveryTermAdmin(admin.ModelAdmin):
+
+    list_display = ("__str__",)
+
+
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 

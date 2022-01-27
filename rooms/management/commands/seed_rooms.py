@@ -21,11 +21,13 @@ class Command(BaseCommand):
         all_nation = room_models.Nation.objects.all()
         all_brand = room_models.Brand.objects.all()
         all_categories = room_models.Category.objects.all()
+        all_delivery_from = room_models.DeliveryFrom.objects.all()
+        all_delivery_term = room_models.DeliveryTerm.objects.all()
         # print(all_users, all_nation)
         name = [
-            "아이폰10",
-            "아이폰11",
-            "아이폰12",
+            "맥북M1",
+            "맥북2018",
+            "맥북M2",
         ]
         seeder.add_entity(
             room_models.Room,
@@ -36,6 +38,8 @@ class Command(BaseCommand):
                 "categories": lambda x: random.choice(all_categories),
                 "host": lambda x: random.choice(all_users),
                 "nation": lambda x: random.choice(all_nation),
+                "delivery_condition": lambda x: random.choice(all_delivery_from),
+                "delivery_term": lambda x: random.choice(all_delivery_term),
                 "price": lambda x: random.randint(100000, 150000),
                 "discount_rate": lambda x: random.randint(5, 20),
                 "description": lambda x: fake.address(),
@@ -50,7 +54,7 @@ class Command(BaseCommand):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
-                    file=f"room_photos/clothe{random.randint(1, 2)}.jpeg",
+                    file=f"room_photos/Mac{random.randint(1, 2)}.jpeg",
                 )
 
             for c in colors:

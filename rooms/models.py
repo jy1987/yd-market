@@ -43,6 +43,16 @@ class Category(AbstractItem):
         ordering = ["name"]
 
 
+class DeliveryFrom(AbstractItem):
+    class Meta:
+        ordering = ["name"]
+
+
+class DeliveryTerm(AbstractItem):
+    class Meta:
+        ordering = ["name"]
+
+
 class Photo(core_models.TimeStampedModel):
 
     caption = models.CharField(max_length=20)
@@ -130,8 +140,12 @@ class Room(core_models.TimeStampedModel):
     categories = models.ForeignKey(
         Category, related_name="rooms", on_delete=SET_NULL, null=True
     )
-    delivery_condition = models.CharField(max_length=20, choices=DELIVERY_CHOICE)
-    delivery_term = models.CharField(max_length=20, choices=DELIVERY_TERM_CHOICE)
+    delivery_condition = models.ForeignKey(
+        DeliveryFrom, related_name="rooms", on_delete=SET_NULL, null=True
+    )
+    delivery_term = models.ForeignKey(
+        DeliveryTerm, related_name="rooms", on_delete=SET_NULL, null=True
+    )
     discount_rate = models.IntegerField()
     color = models.ManyToManyField(ItemColor, related_name="rooms", blank=True)
     host = models.ForeignKey(

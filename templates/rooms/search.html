@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block page_name %}
+    Search by {{nation}}
+{% endblock page_name %}
+
+
+{% block search_bar %}
+    
+{% endblock search_bar %}
+    
+    
+{% block content %}
+
+    <h2>Search</h2>
+    <form method="GET" action="{% url "rooms:search" %}">
+        <div>
+            <label for="name">상품명</label>
+            <input value="{{name}}" id="name" name="name" placeholder="Search by Name"/>
+        </div>
+
+        <div>
+            <label for="nation">국가</label>
+            <select name="nation" id="nation">
+                
+                {% for n in nation  %}
+                    <option value="{{n}}">{{n}}</option>
+                {% endfor %}
+                    
+            </select>
+        </div>
+
+        <div>
+            <label for="category">카테고리</label>
+            <select name="category" id="category">
+                
+                {% for c in category  %}
+                    <option value="{{c}}">{{c}}</option>
+                {% endfor %}
+                    
+            </select>
+        </div>
+
+        <div>
+            <label for="brand">브랜드</label>
+            <select name="brand" id="brand">
+                
+                {% for b in brand  %}
+                    <option value="{{b}}">{{b}}</option>
+                {% endfor %}
+                    
+            </select>
+        </div>
+        <button>찾기</button>
+      </form>
+
+{% endblock content %}
+    

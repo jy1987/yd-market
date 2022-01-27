@@ -39,3 +39,18 @@ class RoomDetail(DetailView):
     model = room_models.Room
     template_name = "rooms/detail.html"
     # context_object_name = "apple"
+
+
+def search(request):
+    name = request.GET.get("name", default="아이폰")
+    nation = room_models.Nation.objects.all()
+    brand = room_models.Brand.objects.all()
+    category = room_models.Category.objects.all()
+    delivery_from = room_models.DeliveryFrom.objects.all()
+    delivery_term = room_models.DeliveryTerm.objects.all()
+    print(vars(request.GET))
+    return render(
+        request,
+        "rooms/search.html",
+        context={"name": name, "nation": nation, "brand": brand, "category": category},
+    )
