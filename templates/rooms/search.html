@@ -24,8 +24,11 @@
             <label for="nation">국가</label>
             <select name="nation" id="nation">
                 
-                {% for n in nation  %}
-                    <option value="{{n}}">{{n}}</option>
+                {% for n in nations  %}
+                    <option value="{{n.pk}}" 
+                    {% if n.pk == selected_nation %} 
+                        selected
+                    {% endif%} >{{n}}</option>
                 {% endfor %}
                     
             </select>
@@ -35,8 +38,11 @@
             <label for="category">카테고리</label>
             <select name="category" id="category">
                 
-                {% for c in category  %}
-                    <option value="{{c}}">{{c}}</option>
+                {% for c in categories  %}
+                    <option value="{{c.pk}}" 
+                    {% if c.pk == selected_category %}
+                        selected
+                    {% endif %}>{{c}}</option>
                 {% endfor %}
                     
             </select>
@@ -46,11 +52,42 @@
             <label for="brand">브랜드</label>
             <select name="brand" id="brand">
                 
-                {% for b in brand  %}
-                    <option value="{{b}}">{{b}}</option>
+                {% for b in brands  %}
+                    <option value="{{b.pk}}" 
+                    {% if b.pk == selected_brand %}
+                        selected
+                    {% endif %}>{{b}}</option>
                 {% endfor %}
                     
             </select>
+        </div>
+
+        <div>
+            <label for="price">Price</label>
+            <input value="{{price}}" type="number" id="price" name="price" placeholder="Price"/>
+        </div>
+
+        <div>
+            <label for="rate">Discount Rate</label>
+            <input value="{{rate}}" type="number" id="rate" name="rate" placeholder="Discount Rate"/>
+        </div>
+
+        <div>
+            <h3>Colors</h3>
+            <ul>
+                
+                {% for color in colors %}
+                    <li>
+                        <label for="{{color.pk}}">{{color}}</label>
+                        <input type="checkbox" name="colors" id="{{color.pk}}" value="{{color.pk}}" 
+                        {% if color.pk|slugify in selected_color %}
+                            checked
+                        {% endif %}
+                            />
+                    </li>
+                {% endfor %}
+                    
+            </ul>
         </div>
         <button>찾기</button>
       </form>

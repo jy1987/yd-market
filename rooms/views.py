@@ -42,15 +42,40 @@ class RoomDetail(DetailView):
 
 
 def search(request):
-    name = request.GET.get("name", default="아이폰")
-    nation = room_models.Nation.objects.all()
-    brand = room_models.Brand.objects.all()
-    category = room_models.Category.objects.all()
+    name = request.GET.get("name", default="조던")
+    nations = room_models.Nation.objects.all()
+    brands = room_models.Brand.objects.all()
+    categories = room_models.Category.objects.all()
     delivery_from = room_models.DeliveryFrom.objects.all()
     delivery_term = room_models.DeliveryTerm.objects.all()
-    print(vars(request.GET))
+    colors = room_models.ItemColor.objects.all()
+
+    brand = request.GET.get("brand", default="1")
+    nation = request.GET.get("nation", default="1")
+    category = request.GET.get("category", default="1")
+    price = request.GET.get("price", 0)
+    rate = request.GET.get("rate", 0)
+    color = request.GET.getlist("colors")
+    print(color)
+    form_request = {
+        "name": name,
+        "selected_brand": int(brand),
+        "selected_nation": int(nation),
+        "selected_category": int(category),
+        "price": int(price),
+        "rate": int(rate),
+        "selected_color": color,
+    }
+    print(form_request)
+    choices_model = {
+        "nations": nations,
+        "brands": brands,
+        "categories": categories,
+        "colors": colors,
+    }
+    print(choices_model)
     return render(
         request,
         "rooms/search.html",
-        context={"name": name, "nation": nation, "brand": brand, "category": category},
+        context={**form_request, **choices_model},
     )
