@@ -12,7 +12,7 @@
     
     
 {% block content %}
-
+<div>
     <h2>Search</h2>
     <form method="GET" action="{% url "rooms:search" %}">
         <div>
@@ -63,6 +63,34 @@
         </div>
 
         <div>
+            <label for="delivery_from">해외/국내배송</label>
+            <select name="delivery_from" id="delivery_from">
+                
+                {% for d in delivery_froms  %}
+                    <option value="{{d.pk}}" 
+                    {% if d.pk == selected_delivery_from %}
+                        selected
+                    {% endif %}>{{d}}</option>
+                {% endfor %}
+                    
+            </select>
+        </div>
+
+        <div>
+            <label for="delivery_term">배송소요일</label>
+            <select name="delivery_term" id="delivery_term">
+                
+                {% for d in delivery_terms  %}
+                    <option value="{{d.pk}}" 
+                    {% if d.pk == selected_delivery_term %}
+                        selected
+                    {% endif %}>{{d}}</option>
+                {% endfor %}
+                    
+            </select>
+        </div>
+
+        <div>
             <label for="price">Price</label>
             <input value="{{price}}" type="number" id="price" name="price" placeholder="Price"/>
         </div>
@@ -91,6 +119,15 @@
         </div>
         <button>찾기</button>
       </form>
+      <div>
+          <h3>Results</h3>
+          {% for room in rooms %}
+              <h3>{{room.name}} {{room.nation}}</h3>
+          {% endfor %}
+              
+      </div>
+</div>
+
 
 {% endblock content %}
     

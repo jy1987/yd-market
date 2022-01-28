@@ -38,11 +38,15 @@ class RoomAdmin(admin.ModelAdmin):
         "nation",
         "brand",
         "host__superhost",
+        "categories",
+        "delivery_condition",
+        "delivery_term",
     )
 
     search_fields = (
-        "nation",
-        "brand",
+        "name",
+        "nation__name",
+        "brand__name",
         "host__username",
     )
 
