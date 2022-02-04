@@ -15,116 +15,32 @@
 <div>
     <h2>Search</h2>
     <form method="GET" action="{% url "rooms:search" %}">
-        <div>
-            <label for="name">상품명</label>
-            <input value="{{name}}" id="name" name="name" placeholder="Search by Name"/>
-        </div>
-
-        <div>
-            <label for="nation">국가</label>
-            <select name="nation" id="nation">
-                
-                {% for n in nations  %}
-                    <option value="{{n.pk}}" 
-                    {% if n.pk == selected_nation %} 
-                        selected
-                    {% endif%} >{{n}}</option>
-                {% endfor %}
-                    
-            </select>
-        </div>
-
-        <div>
-            <label for="category">카테고리</label>
-            <select name="category" id="category">
-                
-                {% for c in categories  %}
-                    <option value="{{c.pk}}" 
-                    {% if c.pk == selected_category %}
-                        selected
-                    {% endif %}>{{c}}</option>
-                {% endfor %}
-                    
-            </select>
-        </div>
-
-        <div>
-            <label for="brand">브랜드</label>
-            <select name="brand" id="brand">
-                
-                {% for b in brands  %}
-                    <option value="{{b.pk}}" 
-                    {% if b.pk == selected_brand %}
-                        selected
-                    {% endif %}>{{b}}</option>
-                {% endfor %}
-                    
-            </select>
-        </div>
-
-        <div>
-            <label for="delivery_from">해외/국내배송</label>
-            <select name="delivery_from" id="delivery_from">
-                
-                {% for d in delivery_froms  %}
-                    <option value="{{d.pk}}" 
-                    {% if d.pk == selected_delivery_from %}
-                        selected
-                    {% endif %}>{{d}}</option>
-                {% endfor %}
-                    
-            </select>
-        </div>
-
-        <div>
-            <label for="delivery_term">배송소요일</label>
-            <select name="delivery_term" id="delivery_term">
-                
-                {% for d in delivery_terms  %}
-                    <option value="{{d.pk}}" 
-                    {% if d.pk == selected_delivery_term %}
-                        selected
-                    {% endif %}>{{d}}</option>
-                {% endfor %}
-                    
-            </select>
-        </div>
-
-        <div>
-            <label for="price">Price</label>
-            <input value="{{price}}" type="number" id="price" name="price" placeholder="Price"/>
-        </div>
-
-        <div>
-            <label for="rate">Discount Rate</label>
-            <input value="{{rate}}" type="number" id="rate" name="rate" placeholder="Discount Rate"/>
-        </div>
-
-        <div>
-            <h3>Colors</h3>
-            <ul>
-                
-                {% for color in colors %}
-                    <li>
-                        <label for="{{color.pk}}">{{color}}</label>
-                        <input type="checkbox" name="colors" id="{{color.pk}}" value="{{color.pk}}" 
-                        {% if color.pk|slugify in selected_color %}
-                            checked
-                        {% endif %}
-                            />
-                    </li>
-                {% endfor %}
-                    
-            </ul>
-        </div>
+        {{form.as_p}}
         <button>찾기</button>
-      </form>
+    </form>
       <div>
           <h3>Results</h3>
           {% for room in rooms %}
-              <h3>{{room.name}} {{room.nation}}</h3>
+              <h3>{{room.name}} {{room.nation}} {{room.price}}
+                  
+                  
+                      
+                      
+              </h3>
           {% endfor %}
               
+      </div>
+      <div>
+        {% if rooms.has_previous %}
+        <a href="{{current_url}}&page={{rooms.number|add:"-1"}}">Previous</a> 
+        {% endif %}
+        
+            
+        <div>page : {{rooms.number}}/{{rooms.paginator.num_pages}}</div>
+    
+        {% if rooms.has_next %}
+        <a href="{{current_url}}&page={{rooms.number|add:"1"}}">Next</a>   
+        {% endif %}
       </div>
 </div>
 
