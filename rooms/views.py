@@ -79,7 +79,7 @@ class SearchView(View):
             )
 
             page = request.GET.get("page", default=1)
-            print(page)
+            print(filter_kwargs)
             current_url = request.get_full_path().split("page")[0]
             if current_url[-1] == "&":
                 current_url = request.get_full_path().split("page")[0][:-1]

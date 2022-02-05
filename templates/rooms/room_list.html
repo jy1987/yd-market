@@ -8,29 +8,37 @@ Home | dy networks
 
 {% block content %} 
 
+<div class="container mx-auto">
+    <div class="w-full h-80 -mt-4 mb-4 bg-cover bg-center" style="background-image: url(https://images.unsplash.com/photo-1615041359332-02c8ffb7fe9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop)">
 
-{% for room in rooms %} 
+    </div>
+
+    {% for room in rooms %} 
     <div>
         <a href="{% url "rooms:detail" room.pk %}">{{room.name}}/{{room.host}}/{{room.nation}}--{{sell}}</a>
     
     </div>
-{% endfor %} 
+    {% endfor %} 
 
 
-<div>
-    
-    {% if page_obj.has_previous %}
-    <a href="/?page={{page_obj.number|add:"-1"}}">Previous</a> 
-    {% endif %}
-    
+    <div>
         
-    <div>page : {{page_obj.number}}/{{page_obj.paginator.num_pages}}</div>
+        {% if page_obj.has_previous %}
+        <a href="/?page={{page_obj.number|add:"-1"}}">Previous</a> 
+        {% endif %}
+        
+            
+        <div>page : {{page_obj.number}}/{{page_obj.paginator.num_pages}}</div>
 
-    {% if page_obj.has_next %}
-    <a href="/?page={{page_obj.number|add:"1"}}">Next</a>   
-    {% endif %}
-    
+        {% if page_obj.has_next %}
+        <a href="/?page={{page_obj.number|add:"1"}}">Next</a>   
+        {% endif %}
+        
+    </div>
 </div>
+
+
+
 
 
 

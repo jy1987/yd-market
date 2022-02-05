@@ -1,8 +1,34 @@
+{% load static %}
 
-    <a href="{% url "core:home" %}">Home</a>
-    <ul>
-        <li>
-            <a href="#">Login</a>
-        </li>
-    </ul>
+
+    <div class="flex items-center justify-around border-b-2 border-green-400 w-full h-30">
+        <div class="flex items-center justify-around w-1/4">
+            <div class="ml-4 flex-col bg-green-400 p-2">
+                <div class="border-b-2 border-white hover:border-blue-500"><a href="#">삽니다</a></div>
+                <div class="border-b-2 border-white hover:border-blue-500"><a href="#">팝니다</a></div>
+
+            </div>
+            <div class="ml-4">
+                <a href="{% url "core:home" %}">
+                <img class="w-24" src="{% static 'img/nike_logo.png' %}" />
+                </a>
+            </div>
+        </div>
+        <div class="border-2 border-green-400 w-1/3  hover:border-blue-500">
+         <form method="GET" action="{% url "rooms:search" %}">
+            <input class="placeholder-gray-500 text-center text-sm font-semibold w-3/4" value="{{nation.pk}}"name="nation" placeholder="국가를 검색하세요"/>
+        </form>
+        </div>
+        <div class="w-1/4">
+            <ul class="flex items-center text-sm">
+                <li class="ml-8 border-b-2 border-white hover:border-blue-500 py-10 w-3/5 text-center">
+                    <a href="#">마이페이지</a>
+                </li>
+                <li class="ml-8 border-b-2 border-white hover:border-blue-500 py-10 w-3/5 text-center">
+                    <a  href="#">알림</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
   
