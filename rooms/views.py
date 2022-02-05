@@ -84,11 +84,17 @@ class SearchView(View):
             if current_url[-1] == "&":
                 current_url = request.get_full_path().split("page")[0][:-1]
             print(current_url)
-            paginator = Paginator(queryset, 2)
+            paginator = Paginator(queryset, 16, orphans=8)
             rooms = paginator.get_page(page)
+            rooms_count = queryset.count()
 
             return render(
                 request,
                 "rooms/search.html",
-                context={"form": form, "rooms": rooms, "current_url": current_url},
+                context={
+                    "form": form,
+                    "rooms": rooms,
+                    "current_url": current_url,
+                    "rooms_count": rooms_count,
+                },
             )

@@ -12,32 +12,36 @@
     
     
 {% block content %}
-<div>
-    <h2>Search</h2>
-    <form method="GET" action="{% url "rooms:search" %}">
+<div class="flex">
+    <div>
+        <form method="GET" action="{% url "rooms:search" %}">
         {{form.as_p}}
         <button>찾기</button>
-    </form>
-      <div>
-          <h3>Results</h3>
-          {% for room in rooms %}
-              <h3>{{room.name}} {{room.nation}} {{room.price}}          
-              </h3>
-          {% endfor %}
-              
-      </div>
-      <div>
-        {% if rooms.has_previous %}
-        <a href="{{current_url}}&page={{rooms.number|add:"-1"}}">Previous</a> 
-        {% endif %}
-        
-            
-        <div>page : {{rooms.number}}/{{rooms.paginator.num_pages}}</div>
+        </form>
+    </div>
     
-        {% if rooms.has_next %}
-        <a href="{{current_url}}&page={{rooms.number|add:"1"}}">Next</a>   
-        {% endif %}
-      </div>
+    <div class="container mx-auto">
+        <div class="py-4 ml-2">총 {{rooms_count}}개</div>  
+          <div class="flex flex-wrap">
+              
+            {% for room in rooms %}
+                {% include 'partials/room_card.html' with room=room %}
+            {% endfor %}
+          </div>
+          <div>
+            {% if rooms.has_previous %}
+            <a href="{{current_url}}&page={{rooms.number|add:"-1"}}">Previous</a> 
+            {% endif %}
+            
+                
+            <div>page : {{rooms.number}}/{{rooms.paginator.num_pages}}</div>
+        
+            {% if rooms.has_next %}
+            <a href="{{current_url}}&page={{rooms.number|add:"1"}}">Next</a>   
+            {% endif %}
+        </div>
+    </div>
+   
 </div>
 
 
