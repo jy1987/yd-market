@@ -48,7 +48,10 @@ class RoomDetail(DetailView):
     def get(self, request, **kwargs):
         a = request.GET.get("arrival")
         b = request.GET.get("destination")
-        result = int(a) + int(b)
+        if a is not None and b is not None:
+            result = a + b
+        else:
+            result = "배송예측결과"
         self.object = self.get_object()
         context = super().get_context_data(**kwargs)
         delivery_term = self.delivery_term
