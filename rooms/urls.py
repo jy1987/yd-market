@@ -5,5 +5,6 @@ app_name = "rooms"
 
 urlpatterns = [
     path("<int:pk>", views.RoomDetail.as_view(), name="detail"),
+    # path("<int:pk>/predict/", views.predict, name="predict"),
     path("search/", views.SearchView.as_view(), name="search"),
 ]

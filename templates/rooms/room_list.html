@@ -12,6 +12,9 @@ Home | dy networks
     <div class="w-full h-80 -mt-4 mb-4 bg-cover bg-center" style="background-image: url(https://images.unsplash.com/photo-1615041359332-02c8ffb7fe9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop)">
 
     </div>
+    <div class="py-4 ml-2">
+        <span>총 </span><span class="text-purple-600">{{rooms_count}}</span><span>개</span>
+    </div> 
     <div class="flex flex-wrap">
         {% for room in rooms %} 
         {% include 'partials/room_card.html' with room=room %}
@@ -20,18 +23,24 @@ Home | dy networks
     
 
 
-    <div>
+    <div class="flex justify-center text-green-400 font-semibold mt-6">
         
-        {% if page_obj.has_previous %}
-        <a href="/?page={{page_obj.number|add:"-1"}}">Previous</a> 
-        {% endif %}
+        <div class="mx-4">
+            {% if page_obj.has_previous %}
+            <a href="/?page={{page_obj.number|add:"-1"}}">이전페이지</a> 
+            {% endif %}
+        </div>
+        
         
             
-        <div>page : {{page_obj.number}}/{{page_obj.paginator.num_pages}}</div>
+        <div class="mx-4">{{page_obj.number}}/{{page_obj.paginator.num_pages}}</div>
 
-        {% if page_obj.has_next %}
-        <a href="/?page={{page_obj.number|add:"1"}}">Next</a>   
-        {% endif %}
+        <div class="mx-4">
+            {% if page_obj.has_next %}
+            <a href="/?page={{page_obj.number|add:"1"}}">다음페이지</a>   
+            {% endif %}
+        </div>
+       
         
     </div>
 </div>

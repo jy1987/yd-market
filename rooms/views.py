@@ -15,11 +15,14 @@ class HomeView(ListView):
     ordering = "created"
     paginate_orphans = 8
     context_object_name = "rooms"
+    rooms_count = room_models.Room.objects.count()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sell = "팝니다"
+        rooms_count = self.rooms_count
         context["sell"] = sell
+        context["rooms_count"] = rooms_count
         return context
 
 
@@ -39,7 +42,19 @@ class RoomDetail(DetailView):
 
     model = room_models.Room
     template_name = "rooms/detail.html"
+    delivery_term = room_models.DeliveryTerm.objects.all()
+
     # context_object_name = "apple"
+    def get(self, request, **kwargs):
+        a = request.GET.get("arrival")
+        b = request.GET.get("destination")
+        result = int(a) + int(b)
+        self.object = self.get_object()
+        context = super().get_context_data(**kwargs)
+        delivery_term = self.delivery_term
+        context["delivery_term"] = delivery_term
+        context["result"] = result
+        return self.render_to_response(context)
 
 
 class SearchView(View):

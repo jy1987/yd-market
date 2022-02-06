@@ -4,6 +4,7 @@ from django.db.models.deletion import CASCADE, SET_NULL
 from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as user_models
+import math
 
 
 class AbstractItem(core_models.TimeStampedModel):
@@ -179,3 +180,7 @@ class Room(core_models.TimeStampedModel):
     def first_photo(self):
         (photo,) = self.photos.all()[:1]
         return photo.file.url
+
+    def discount(self):
+        discount = math.ceil(self.price * (1 - self.discount_rate / 100))
+        return discount

@@ -4,19 +4,26 @@
 <div class="w-1/4 mb-8 px-2 ">
     <a href="{% url "rooms:detail" room.pk %}">
         <div class="w-full h-64 bg-center bg-cover rounded-md border-2 border-white hover:border-green-300" style="background-image: url({{room.first_photo}});"></div>
-        <div class="mx-4">
-            <div class="font-bold text-lg">{{room.name}}</div>
-            <div class="font-bold text-lg">{{room.brand}}</div>
+        <div class="mx-4 mt-2">
+            <div class="flex justify-between">
+                <div>
+                    <div class="font-bold text-lg">{{room.name}}</div>
+                    <div class="font-bold text-lg">{{room.brand}}</div>
+                </div>
+                
+                <div class="text-sm"><i class="fas fa-star text-purple-600 text-xs mr-2"></i>{{room.total_value}}</div>
+            </div>
+            
             <div>{{room.host}}</div>
             
             <div>{{room.categories}}</div>
             <div>{{room.price|intcomma}}원</div>
             <div class="flex items-center justify-between">
                 <div class="w-1/4">{{room.nation}}</div>
-                <div class="w-3/4 -mx-6 text-gray-500">{{room.delivery_term}}</div>
+                <div class="w-3/4 -mx-6 text-gray-500 text-sm">{{room.delivery_term}}</div>
             </div>
             
-            <div class="text-purple-600 border-2 border-green-300 w-2/3 text-center justify-center">{{room.delivery_condition}}</div>
+            <div class="text-purple-600 border-2 border-green-300 text-sm font-bold w-2/3 text-center justify-center">{{room.delivery_condition}}</div>
         </div>
         
         

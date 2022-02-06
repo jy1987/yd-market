@@ -1,4 +1,7 @@
+
 {% extends 'base.html' %} 
+
+{% load humanize %}
 
 {% block page_name %} 
 
@@ -7,23 +10,83 @@
 {% endblock page_name %} 
 
 {% block content %} 
-<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <h1 style="background-color: tomato;">{{room.name}}</h1>
-    <h2>{{room.brand}}</h2>
-    <p>{{room.description}}</p>
-    <h4>{{room.price}}원</h4>
-    <h4>카테고리:{{room.categories}}</h4>
-    <h4>{{room.delivery_condition}}</h4>
-    <h4>{{room.delivery_term}}</h4>
-    <h4>{{room.host}}</h4>
-    
-    <h4>Color</h4>
-        {% for color in room.color.all %}
-        <ul>
-            <li>{{color}}</li>
-        </ul>
-    {% endfor %}
-    
+<div class="container mx-auto">
+    <div class="flex justify-evenly">
+        <div class="flex justify-end w-1/2  mx-8">
+            <div class="w-64 h-64 bg-center bg-cover rounded-md border-2 border-gray-150 hover:border-green-300" style="background-image: url({{room.first_photo}});"></div>
+            
+        </div>
+        <div class="w-1/2 mx-8">
+            <form>
+                <div>
+                    {{room.brand}}
+                </div>
+                <div>
+                    {{room.name}}
+                </div>
+                <div>
+                    {{room.price|intcomma}} 원
+                </div>
+                <div>
+                    {{room.discount|intcomma}} 원 <span>{{room.discount_rate}}%</span>
+                </div>
+                <div>
+                    {{room.delivery_condition}}
+                </div>
+                <div>
+                    <select name="delivery_term" id="delivery_term">
+                            <option value="">옵션 선택</option>
+                        {% for d in delivery_term  %}
+                            <option value="{{d.pk}}">{{d}}</option>
+                        {% endfor %}
+                            
+                    </select>
+                </div>
+                <div>주문 후 <span class="text-red-400">최대 7일</span>내로 발송 가능</div>
+                <div>{{room.nation}} 에서 구매</div>
+                <div>
+                    요약 설명글
+                </div>
+                <div>
+                    <select name="color" id="color" >
+                        <option value="">상품옵션을 선택해주세요.</option>
+                        {% for c in room.color.all  %}
+                            <option value="{{c.pk}}">{{c}}</option>
+                        {% endfor %}
+                            
+                    </select>
+                </div>
+                <button>구매</button>
+            </form>
+       
+        
+          </div>
+    </div>
+    <div>
+        상품도착예측
+        <form method="GET" action="{% url "rooms:detail" room.pk%}">
+            <div>
+                <select name="arrival" id="arrival" >
+                    <option value="">출발지</option>
+                    <option value="1">서울</option>
+                    <option value="1">인천</option>
+                    
+                        
+                </select>
+            </div>
+            <div>
+                <select name="destination" id="destination" >
+                    <option value="">도착지</option>
+                    <option value="1">부산</option>
+                    <option value="2">광주</option>
+                   
+                        
+                </select>
+            </div>
+            <button>조회</button>
+            <div>{{result}}</div>
+        </form>
+    </div>
     
 
 </div>
