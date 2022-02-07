@@ -12,43 +12,52 @@
 {% block content %} 
 <div class="container mx-auto">
     <div class="flex justify-evenly">
-        <div class="flex justify-end w-1/2  mx-8">
-            <div class="w-64 h-64 bg-center bg-cover rounded-md border-2 border-gray-150 hover:border-green-300" style="background-image: url({{room.first_photo}});"></div>
-            
+        <div class="flex w-1/2  mx-8">
+            <div class="w-1/2 h-auto bg-center bg-cover rounded-md border-2 border-gray-200 hover:border-green-300" style="background-image: url({{room.first_photo}});"></div>
+            <div class="w-1/2 ml-2 flex flex-wrap">
+                
+                {% for photo in room.get_five_photos  %}
+                    <div style="background-image: url({{photo.file.url}})" class="w-1/2 h-auto bg-center bg-cover border-2 border-gray-200 hover:border-green-300"></div>
+                {% endfor %}
+                    
+            </div>
         </div>
         <div class="w-1/2 mx-8">
             <form>
-                <div>
+                <div class="text-lg font-semibold">
                     {{room.brand}}
                 </div>
-                <div>
+                <div class="text-2xl font-bold border-b-2 ">
                     {{room.name}}
                 </div>
-                <div>
-                    {{room.price|intcomma}} 원
+                <div class="mt-1">
+                    판매가 <span class="text-lg ml-4">{{room.price|intcomma}}</span> 원
                 </div>
-                <div>
-                    {{room.discount|intcomma}} 원 <span>{{room.discount_rate}}%</span>
+                <div class="mt-1">
+                    할인가 <span class="text-xl font-bold ml-4">{{room.discount|intcomma}}</span> 원 <span class="text-lg text-red-500 font-bold ml-4">- {{room.discount_rate}}%</span>
                 </div>
-                <div>
-                    {{room.delivery_condition}}
+                <div class="flex mt-1">
+                    <div>
+                        배송조건 <span class="font-bold mx-4">{{room.delivery_condition}}</span>
+                    </div>
+                    <div class="border-2 border-gray-300 px-6 ml-4 rounded-md">
+                        <select name="delivery_term" id="delivery_term">
+                                <option value="">옵션 선택</option>
+                            {% for d in delivery_term  %}
+                                <option value="{{d.pk}}">{{d}}</option>
+                            {% endfor %}
+                                
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <select name="delivery_term" id="delivery_term">
-                            <option value="">옵션 선택</option>
-                        {% for d in delivery_term  %}
-                            <option value="{{d.pk}}">{{d}}</option>
-                        {% endfor %}
-                            
-                    </select>
-                </div>
-                <div>주문 후 <span class="text-red-400">최대 7일</span>내로 발송 가능</div>
-                <div>{{room.nation}} 에서 구매</div>
-                <div>
+                
+                <div class="mt-1">주문 후 <span class="text-red-400">최대 7일</span>내로 발송 가능</div>
+                <div class="mt-1">{{room.nation}} 에서 구매</div>
+                <div class="mt-1">
                     요약 설명글
                 </div>
-                <div>
-                    <select name="color" id="color" >
+                <div class="border-2 border-gray-300 ml-4 w-full mt-1 rounded-md">
+                    <select class="w-full" name="color" id="color" >
                         <option value="">상품옵션을 선택해주세요.</option>
                         {% for c in room.color.all  %}
                             <option value="{{c.pk}}">{{c}}</option>
@@ -62,32 +71,84 @@
         
           </div>
     </div>
-    <div>
-        상품도착예측
-        <form method="GET" action="{% url "rooms:detail" room.pk%}">
+    <div class="flex justify-evenly mt-8">
+        <div class="w-1/2 mx-8 bg-purple-100">
+            <div>유의사항</div> 
+        </div>
+        <div class="w-1/2 mx-8 bg-purple-100 ">
+            <div class="">상품도착예측</div>
             <div>
-                <select name="arrival" id="arrival" >
-                    <option value="">출발지</option>
-                    <option value="1">서울</option>
-                    <option value="1">인천</option>
-                    
-                        
-                </select>
+                <form method="GET" action="{% url "rooms:detail" room.pk%}">
+                    <div>
+                        <select name="shipping" id="shipping" >
+                            <option value="">국내택배</option>
+                            <option value="0">우체국</option>
+                            <option value="1">CJ대한통운</option>
+  
+                        </select>
+                    </div>
+                    <div>
+                        <select name="carrier" id="carrier" >
+                            <option value="">특송사</option>
+                            <option value="0">판토스</option>
+                            <option value="1">대한통운</option>
+    
+                        </select>
+                    </div>
+                    <div>
+                        <select name="day1" id="day1" >
+                            <option value="">비행도착요일</option>
+                            <option value="1">월요일</option>
+                            <option value="2">화요일</option>
+                            <option value="3">수요일</option>
+                            <option value="4">목요일</option>
+                            <option value="5">금요일</option>
+                            <option value="6">토요일</option>
+                            <option value="0">일요일</option>
+  
+                        </select>
+                    </div>
+                    <div>
+                        <select name="arrival_time" id="arrival_time" >
+                            <option value="">비행도착시간</option>
+                            <option value="900">09:00</option>
+                            <option value="1200">12:00</option>
+                            <option value="1500">15:00</option>
+                            <option value="1800">18:00</option>
+                            <option value="2100">21:00</option>     
+                        </select>
+                    </div>
+                    <div>
+                        <select name="destination" id="destination" >
+                            <option value="">도착지</option>
+                            <option value="0">부산</option>
+                            <option value="1">광주</option>
+
+                        </select>
+                    </div>
+       
+                    <div>
+                        <select name="day2" id="day2" >
+                            <option value="">소포도착예정요일</option>
+                            <option value="1">월요일</option>
+                            <option value="2">화요일</option>
+                            <option value="3">수요일</option>
+                            <option value="4">목요일</option>
+                            <option value="5">금요일</option>
+                            <option value="6">토요일</option>
+                            <option value="0">일요일</option>     
+                        </select>
+                    </div>
+                    <button>조회</button>
+                    <div>결과</div>
+                    <div>{{result}}</div>
+                    <div>걸린시간 : {{interval|floatformat:"0"}}초</div>
+                </form>
             </div>
-            <div>
-                <select name="destination" id="destination" >
-                    <option value="">도착지</option>
-                    <option value="1">부산</option>
-                    <option value="2">광주</option>
-                   
-                        
-                </select>
-            </div>
-            <button>조회</button>
-            <div>결과</div>
-            <div>{{result}}</div>
-        </form>
+            
+        </div>
     </div>
+    
     
 
 </div>

@@ -181,6 +181,10 @@ class Room(core_models.TimeStampedModel):
         (photo,) = self.photos.all()[:1]
         return photo.file.url
 
+    def get_five_photos(self):
+        photos = self.photos.all()[1:6]
+        return photos
+
     def discount(self):
         discount = math.ceil(self.price * (1 - self.discount_rate / 100))
         return discount

@@ -4,19 +4,19 @@
     <div class="flex items-center justify-around border-b-2 border-green-400 w-full h-30">
         <div class="flex items-center justify-around w-1/4">
             <div class="ml-4 flex-col bg-green-400 p-2">
-                <div class="border-b-2 border-white hover:border-blue-500"><a href="{% url "rooms:search" %}">삽니다</a></div>
-                <div class="border-b-2 border-white hover:border-blue-500"><a href="{% url "rooms:search" %}">팝니다</a></div>
+                <div class="border-b-2 border-white hover:border-blue-500"><a href="{% url "rooms:buy" %}">삽니다</a></div>
+                <div class="border-b-2 border-white hover:border-blue-500"><a href="{% url "rooms:sell" %}">팝니다</a></div>
 
             </div>
             <div class="ml-4">
                 <a href="{% url "core:home" %}">
-                <img class="w-24" src="{% static 'img/nike_logo.png' %}" />
+                <img class="w-36 " src="{% static 'img/logo.png' %}" />
                 </a>
             </div>
         </div>
         <div class="border-2 border-green-400 w-1/3  hover:border-blue-500">
          <form method="GET" action="{% url "rooms:search" %}">
-            <input class="placeholder-gray-500 text-center text-sm font-semibold w-3/4 py-2" name="name" placeholder="상품명을 검색하세요"/>
+            <input class="placeholder-gray-500 text-center text-sm font-semibold w-5/6 py-2" name="name" placeholder="상품명을 검색하세요"/>
             <button class="bg-purple-600 text-white px-3 rounded-md"><i class="fas fa-search text-sm"></i></button>
         </form>
         </div>

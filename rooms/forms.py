@@ -20,6 +20,7 @@ class SearchForm(forms.Form):
     delivery_term = forms.ModelChoiceField(
         required=False, queryset=room_models.DeliveryTerm.objects.all(), label="배송기간"
     )
+
     """
     colors = forms.ModelMultipleChoiceField(
         required=False,

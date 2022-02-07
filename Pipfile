@@ -11,6 +11,8 @@ django-countries = "*"
 django-seed = "==0.2.2"
 psycopg2-binary = "*"
 beautify = "*"
+pandas = "*"
+sklearn = "*"
 
 [dev-packages]
 flake8 = "*"
