@@ -20,6 +20,7 @@ class HomeView(ListView):
     paginate_orphans = 8
     context_object_name = "rooms"
     rooms_count = room_models.Room.objects.count()
+    # print(rooms_count)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

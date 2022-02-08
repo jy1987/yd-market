@@ -38,5 +38,45 @@
     </header>
 
     {% block content %} {% endblock %} {% include 'partials/footer.html' %}
+  
+    <script>
+      const back=document.querySelectorAll(".js-select")
+      const front=document.querySelector(".js-showing")
+      const bgImage=document.querySelector(".js-bgimage")
+      
+      const clickChange=()=>{
+        
+        front.classList.toggle("hidden")
+        back.forEach((x)=>x.classList.toggle("hidden"))
+        
+        
+      }
+      front.addEventListener("click",clickChange)
+
+      var i=0
+      var images=[]
+
+      images[0]="/static/img/bgimage1.jpeg"
+      images[1]="/static/img/bgimage2.jpeg"
+      images[2]="/static/img/bgimage3.jpeg"
+      images[3]="/static/img/bgimage4.jpeg"
+     
+
+      const changeBgImage=()=>{
+        try{
+          bgImage.style.backgroundImage=`url("${images[i]}")`
+        if(i<images.length-1){
+          i++
+        }else{
+          i=0
+        }
+        }
+        finally{
+          return 
+        }
+      }
+      
+      setInterval(changeBgImage,3000)
+    </script>
   </body>
 </html>

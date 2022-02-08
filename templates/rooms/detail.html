@@ -76,27 +76,27 @@
             <div>유의사항</div> 
         </div>
         <div class="w-1/2 mx-8 bg-purple-100 ">
-            <div class="">상품도착예측</div>
-            <div>
+            <div class="font-semibold ml-4 w-1/2">상품도착예측</div>
+            <div class="ml-4 w-1/2">
                 <form method="GET" action="{% url "rooms:detail" room.pk%}">
-                    <div>
-                        <select name="shipping" id="shipping" >
+                    <div class="mt-1">
+                        <select name="shipping" id="shipping" class="text-sm w-1/2" >
                             <option value="">국내택배</option>
                             <option value="0">우체국</option>
                             <option value="1">CJ대한통운</option>
   
                         </select>
                     </div>
-                    <div>
-                        <select name="carrier" id="carrier" >
+                    <div class="mt-1">
+                        <select name="carrier" id="carrier" class="text-sm w-1/2">
                             <option value="">특송사</option>
                             <option value="0">판토스</option>
                             <option value="1">대한통운</option>
     
                         </select>
                     </div>
-                    <div>
-                        <select name="day1" id="day1" >
+                    <div class="mt-1">
+                        <select name="day1" id="day1" class="text-sm w-1/2">
                             <option value="">비행도착요일</option>
                             <option value="1">월요일</option>
                             <option value="2">화요일</option>
@@ -108,8 +108,8 @@
   
                         </select>
                     </div>
-                    <div>
-                        <select name="arrival_time" id="arrival_time" >
+                    <div class="mt-1">
+                        <select name="arrival_time" id="arrival_time" class="text-sm w-1/2">
                             <option value="">비행도착시간</option>
                             <option value="900">09:00</option>
                             <option value="1200">12:00</option>
@@ -118,17 +118,19 @@
                             <option value="2100">21:00</option>     
                         </select>
                     </div>
-                    <div>
-                        <select name="destination" id="destination" >
+                    <div class="mt-1">
+                        <select name="destination" id="destination" class="text-sm w-1/2">
                             <option value="">도착지</option>
                             <option value="0">부산</option>
                             <option value="1">광주</option>
+                            <option value="2">서울</option>
+                            <option value="3">제주도</option>
 
                         </select>
                     </div>
        
-                    <div>
-                        <select name="day2" id="day2" >
+                    <div class="mt-1">
+                        <select name="day2" id="day2" class="text-sm w-1/2">
                             <option value="">소포도착예정요일</option>
                             <option value="1">월요일</option>
                             <option value="2">화요일</option>
@@ -139,11 +141,15 @@
                             <option value="0">일요일</option>     
                         </select>
                     </div>
-                    <button>조회</button>
-                    <div>결과</div>
+                    <button class="bg-green-400 text-white px-4 border rounded-sm">조회</button>
+                    
+                </form>
+                <div class="flex flex-col items-center w-1/2">
+                    <div class="text-purple-600 font-semibold">결과</div>
                     <div>{{result}}</div>
                     <div>걸린시간 : {{interval|floatformat:"0"}}초</div>
-                </form>
+                </div>
+                
             </div>
             
         </div>

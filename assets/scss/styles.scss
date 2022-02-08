@@ -2,8 +2,11 @@
 @tailwind components;
 
 
-#id_name {
-    border: 2px tomato solid;
+.search {
+    input,select{
+        @apply border border-purple-400 w-full;
+    }
+    
     
 }
 

@@ -25,9 +25,9 @@ class Command(BaseCommand):
         all_delivery_term = room_models.DeliveryTerm.objects.all()
         # print(all_users, all_nation)
         name = [
-            "맥북M1",
-            "맥북2018",
-            "맥북M2",
+            "아이폰11",
+            "아이폰12",
+            "아이폰13",
         ]
         seeder.add_entity(
             room_models.Room,
@@ -50,11 +50,11 @@ class Command(BaseCommand):
         colors = room_models.ItemColor.objects.all()
         for pk in created_clean:
             room = room_models.Room.objects.get(pk=pk)
-            for i in range(3, random.randint(5, 6)):
+            for i in range(3, random.randint(6, 7)):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
-                    file=f"room_photos/Mac{random.randint(1, 2)}.jpeg",
+                    file=f"room_photos/iphone{random.randint(1, 4)}.jpeg",
                 )
 
             for c in colors:
