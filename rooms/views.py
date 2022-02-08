@@ -120,10 +120,15 @@ class RoomDetail(DetailView):
         else:
             result = "배송예측결과"
         self.object = self.get_object()
+        # get objects of room's host rooms
+        room = self.object
+        host_rooms = room.host.rooms.all()[:4]
+
         context = super().get_context_data(**kwargs)
         delivery_term = self.delivery_term
         context["delivery_term"] = delivery_term
         context["result"] = result
+        context["host_rooms"] = host_rooms
         end = time.time()
         time_interval = end - start
         context["interval"] = time_interval
