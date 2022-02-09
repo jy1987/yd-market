@@ -102,12 +102,16 @@ class RoomDetail(DetailView):
     # context_object_name = "apple"
     def get(self, request, **kwargs):
         start = time.time()
+        # get input values for bigdata
         a = request.GET.get("shipping")
         b = request.GET.get("carrier")
         c = request.GET.get("day1")
         d = request.GET.get("arrival_time")
         e = request.GET.get("destination")
         f = request.GET.get("day2")
+        # get the count from request for calculating total price
+        count = request.GET.get("count", 1)
+
         if (
             a is not None
             and b is not None
@@ -132,6 +136,11 @@ class RoomDetail(DetailView):
         end = time.time()
         time_interval = end - start
         context["interval"] = time_interval
+        context["count"] = count
+        total_price = int(count) * room.price
+
+        context["sum"] = total_price
+
         return self.render_to_response(context)
 
 

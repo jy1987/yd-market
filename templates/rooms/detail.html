@@ -34,7 +34,7 @@
                     판매가 <span class="text-lg ml-4">{{room.price|intcomma}}</span> 원
                 </div>
                 <div class="mt-1">
-                    할인가 <span class="text-xl font-bold ml-4">{{room.discount|intcomma}}</span> 원 <span class="text-lg text-red-500 font-bold ml-4">- {{room.discount_rate}}%</span>
+                    할인가 <span class="text-xl font-bold ml-4 price">{{room.discount|intcomma}}</span> 원 <span class="text-lg text-red-500 font-bold ml-4">- {{room.discount_rate}}%</span>
                 </div>
                 <div class="flex mt-1">
                     <div>
@@ -72,7 +72,7 @@
         
           </div>
     </div>
-    <div class="flex justify-evenly mt-8">
+    <div class="flex justify-evenly mt-8 pb-16 border-b-2 border-gray-200">
         <div class="w-1/2 mx-8">
             <div class=" bg-purple-100 h-1/2 py-4">
                 <div class="ml-2 mb-4 font-semibold text-lg">유의사항</div> 
@@ -83,12 +83,12 @@
                 </div>
                 
             </div>
-            <div class="mt-4 h-1/2">
+            <div class="mt-4 h-1/2 pb-16">
                 <div class="flex justify-start items-center">
                     <div class="w-24 h-24 bg-center bg-cover rounded-md border-2 border-gray-200 hover:border-green-300" style="background-image: url({{room.first_photo}});"></div>
                     <div class="ml-2 text-lg font-bold">{{room.host}}님의 마켓</div>
                 </div>
-                <div class="container mx-auto flex flex-wrap mt-4">
+                <div class="container mx-auto flex flex-wrap mt-4 h-1/2">
                     {% for room in host_rooms %}
                     
                     <div class="w-1/4">
@@ -114,7 +114,7 @@
         <div class="w-1/2 mx-8 bg-purple-100 ">
             <div class="font-semibold ml-4 w-1/2">상품도착예측</div>
             <div class="ml-4 w-1/2">
-                <form method="GET" action="{% url "rooms:detail" room.pk%}">
+                <form class="bigdata" method="GET" action="{% url "rooms:detail" room.pk%}">
                     <div class="mt-1">
                         <select name="shipping" id="shipping" class="text-sm w-full" >
                             <option value="">국내택배</option>
@@ -182,6 +182,7 @@
                 </form>
                 <div class="flex flex-col items-center w-full">
                     <div class="text-purple-600 font-semibold">결과</div>
+                    <div class="result-select"></div>
                     <div>{{result}}</div>
                     <div>걸린시간 : {{interval|floatformat:"0"}}초</div>
                 </div>
@@ -192,9 +193,35 @@
                 <div class="ml-4 text-2xl font-bold">
                     총 상품금액
                 </div>
-                <div class=" flex justify-between">
-                    <button class="bg-green-400 w-1/2 py-2 rounded-md mt-4 mx-2 text-white">장바구니</button>
-                    <button class="bg-purple-400 w-1/2 py-2 rounded-md mt-4 mx-2 text-white">구매</button>
+                <div >
+                    <form>
+                        <div class="flex justify-between mx-2 mt-4 price">
+                            <div>상품옵션</div>
+                            <div>
+                                <div class="js-count flex justify-center">
+                                    <div class="js-minus">-</div>
+                                    <input class="text-center" value="{{count}}"name="count">
+                                    <div class="js-plus">+</div>
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <div>
+                                    총 상품금액:
+                                </div>
+                                <div class="js-result ml-4">
+                                    <span>원</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class=" flex justify-between">
+                            <button class="bg-green-400 w-1/2 py-2 rounded-md mt-4 mx-2 text-white">장바구니</button>
+                            <button class="bg-purple-400 w-1/2 py-2 rounded-md mt-4 mx-2 text-white">구매</button>
+                        </div>
+                    </form>
+                
+                    
                 </div>
             </div>
             
@@ -202,10 +229,62 @@
         </div>
     </div>
     
+    <div class="mt-8 justify-center">
+        <div class="text-2xl font-bold">상품평<span class="text-purple-600">({{room.reviews.all|length}})</span></div>
+        
+        <div>
+            
+            {% for review in room.reviews.all %}
+            <div class="border-b border-gray-400 mb-2 py-2">
+                <div>{{review.user}}</div>
+                <i class="fas fa-star text-purple-600 text-xs mr-2"></i>{{review.value}}
+                <div class="border border-gray-300 rounded-md py-2 px-2">{{review.review}}</div>
+            </div>
+               
+            {% endfor %}
+                
+        </div>
+        
+    </div>
     
 
 </div>
 
+<script>
+    const count=document.querySelector(".js-count")
+    const plusBtn=count.querySelector(".js-plus")
+    const minusBtn=count.querySelector(".js-minus")
+    const input=count.querySelector("input")
+    const price=document.querySelector(".price")
+    const result=document.querySelector(".js-result")
+
+    let counter=0
+
+    const discountPrice=parseInt(price.innerText.replace(",",""))
+
+    const clickPlusBtn=(e)=>{
+        
+        //e.preventDefault()
+        counter=counter+1
+        input.value=counter
+        result.innerText=`${counter*discountPrice} 원`
+        
+    }
+
+    const clickMinusBtn=(e)=>{
+        
+        //e.preventDefault()
+        if(counter>0){
+            counter=counter-1
+            input.value=counter
+            result.innerText=`${counter*discountPrice} 원`
+        }
+        
+    }
+
+    plusBtn.addEventListener("click",clickPlusBtn)
+    minusBtn.addEventListener("click",clickMinusBtn)
+</script>
     
 
 {% endblock %} 

@@ -10,8 +10,11 @@
                     <div class="font-bold text-lg">{{room.name}}</div>
                     <div class="font-bold text-lg">{{room.brand}}</div>
                 </div>
+                <div>
+                    <div class="text-sm"><i class="fas fa-star text-purple-600 text-xs mr-2"></i>{{room.total_value}}</div>
+                    <div class="text-sm"><span>상품평</span>({{room.reviews.all|length}})</div>
+                </div>
                 
-                <div class="text-sm"><i class="fas fa-star text-purple-600 text-xs mr-2"></i>{{room.total_value}}</div>
             </div>
             
             <div>{{room.host}}</div>

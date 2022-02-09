@@ -40,10 +40,15 @@
     {% block content %} {% endblock %} {% include 'partials/footer.html' %}
   
     <script>
+      //category showing
       const back=document.querySelectorAll(".js-select")
       const front=document.querySelector(".js-showing")
+      //changing backimage
       const bgImage=document.querySelector(".js-bgimage")
+
+      //bigdata
       
+
       const clickChange=()=>{
         
         front.classList.toggle("hidden")
@@ -53,6 +58,7 @@
       }
       front.addEventListener("click",clickChange)
 
+      // changing background-image by setinterval 
       var i=0
       var images=[]
 
@@ -77,6 +83,9 @@
       }
       
       setInterval(changeBgImage,3000)
+
+      
+
     </script>
   </body>
 </html>
