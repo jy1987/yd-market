@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+
+{% block page_name %} 
+
+Home | dy networks
+
+{% endblock page_name %} 
+
+{% block content %} 
+
+<div class="container mx-auto">
+    <div class="js-bgimage w-full h-50vh -mt-4 mb-4 bg-cover bg-center border rounded-md" style="background-image: url(/static/img/bgimage1.jpeg)" >
+
+    </div>
+    <div class="py-4 ml-2">
+        <span>총 </span><span class="text-purple-600">{{rooms|length}}</span><span>개</span>
+        
+        {% for b in brand  %}
+            {{b}}
+        {% endfor %}
+            
+        {% for n in nation  %}
+            {{n}}
+        {% endfor %}
+
+        {% for c in category  %}
+            {{c}}
+        {% endfor %}
+            
+    </div> 
+    <div class="flex flex-wrap">
+        {% for room in rooms %} 
+        {% include 'partials/room_card.html' with room=room %}
+    {% endfor %} 
+    </div>
+    
+
+</div>
+
+
+{% endblock content %}

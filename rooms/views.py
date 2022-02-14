@@ -93,6 +93,24 @@ def bigdata(a, b, c, d, e, x):
     return interval
 
 
+def transform(x):
+    if int(x) == 1:
+        day = "월요일"
+    elif int(x) == 2:
+        day = "화요일"
+    elif int(x) == 3:
+        day = "수요일"
+    elif int(x) == 4:
+        day = "목요일"
+    elif int(x) == 5:
+        day = "금요일"
+    elif int(x) == 6:
+        day = "토요일"
+    else:
+        day = "일요일"
+    return day
+
+
 class RoomDetail(DetailView):
 
     model = room_models.Room
@@ -109,6 +127,11 @@ class RoomDetail(DetailView):
         d = request.GET.get("arrival_time")
         e = request.GET.get("destination")
         f = request.GET.get("day2")
+        # get invoice number
+
+        code = request.GET.get("code")
+        print(code)
+
         # get the count from request for calculating total price
         count = request.GET.get("count", 1)
 
@@ -140,7 +163,10 @@ class RoomDetail(DetailView):
         total_price = int(count) * room.price
 
         context["sum"] = total_price
-
+        context["shipping"] = a
+        context["code"] = code
+        if c is not None:
+            context["day1"] = transform(c)
         return self.render_to_response(context)
 
 

@@ -12,8 +12,8 @@
     
     
 {% block content %}
-<div class="flex">
-    <div class="w-1/4">
+<div class="flex container mx-auto">
+    <div class="w-1/4 container mx-auto">
         <form  class="search" method="GET" action="{% url "rooms:search" %}">
         <div class="text-purple-600 font-semibold text-lg mt-4 mx-4">{{form.as_p}}</div>
         <button class="border-2 bg-green-400 text-white px-6 py-2 rounded-lg ml-12 mt-4">검색</button>

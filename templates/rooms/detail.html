@@ -112,83 +112,105 @@
         </div>
         
         <div class="w-1/2 mx-8 bg-purple-100 ">
-            <div class="font-semibold ml-4 w-1/2">상품도착예측</div>
-            <div class="ml-4 w-1/2">
-                <form class="bigdata" method="GET" action="{% url "rooms:detail" room.pk%}">
-                    <div class="mt-1">
-                        <select name="shipping" id="shipping" class="text-sm w-full" >
-                            <option value="">국내택배</option>
-                            <option value="0">우체국</option>
-                            <option value="1">CJ대한통운</option>
-  
-                        </select>
-                    </div>
-                    <div class="mt-1">
-                        <select name="carrier" id="carrier" class="text-sm w-full">
-                            <option value="">특송사</option>
-                            <option value="0">판토스</option>
-                            <option value="1">대한통운</option>
-    
-                        </select>
-                    </div>
-                    <div class="mt-1">
-                        <select name="day1" id="day1" class="text-sm w-full">
-                            <option value="">비행도착요일</option>
-                            <option value="1">월요일</option>
-                            <option value="2">화요일</option>
-                            <option value="3">수요일</option>
-                            <option value="4">목요일</option>
-                            <option value="5">금요일</option>
-                            <option value="6">토요일</option>
-                            <option value="0">일요일</option>
-  
-                        </select>
-                    </div>
-                    <div class="mt-1">
-                        <select name="arrival_time" id="arrival_time" class="text-sm w-full">
-                            <option value="">비행도착시간</option>
-                            <option value="900">09:00</option>
-                            <option value="1200">12:00</option>
-                            <option value="1500">15:00</option>
-                            <option value="1800">18:00</option>
-                            <option value="2100">21:00</option>     
-                        </select>
-                    </div>
-                    <div class="mt-1">
-                        <select name="destination" id="destination" class="text-sm w-full">
-                            <option value="">도착지</option>
-                            <option value="0">부산</option>
-                            <option value="1">광주</option>
-                            <option value="2">서울</option>
-                            <option value="3">제주도</option>
-
-                        </select>
-                    </div>
-       
-                    <div class="mt-1">
-                        <select name="day2" id="day2" class="text-sm w-full">
-                            <option value="">소포도착예정요일</option>
-                            <option value="1">월요일</option>
-                            <option value="2">화요일</option>
-                            <option value="3">수요일</option>
-                            <option value="4">목요일</option>
-                            <option value="5">금요일</option>
-                            <option value="6">토요일</option>
-                            <option value="0">일요일</option>     
-                        </select>
-                    </div>
-                    <button class="bg-green-400 text-white px-4 border rounded-sm mt-2 w-full">조회</button>
-                    
-                </form>
-                <div class="flex flex-col items-center w-full">
-                    <div class="text-purple-600 font-semibold">결과</div>
-                    <div class="result-select"></div>
-                    <div>{{result}}</div>
-                    <div>걸린시간 : {{interval|floatformat:"0"}}초</div>
-                </div>
-                
-                
+            <div class="flex justify-around">
+                <div class="font-semibold ml-4 w-1/2 mt-2">상품도착예측</div>
+                <div class="font-semibold ml-4 w-1/2 mt-2">상품배송조회</div>
             </div>
+            <div class="flex ">
+                <div class="ml-4 w-1/2">
+                    <form class="bigdata w-3/4" method="GET" action="{% url "rooms:detail" room.pk%}">
+                        <div class="mt-1">
+                            <select name="shipping" id="shipping" class="text-sm w-full" >
+                                <option value="" >국내택배</option>
+                                <option value="0" 
+                                {% if shipping|slugify == "0"  %}
+                                    selected
+                                {% endif %}
+                                    >우체국</option>
+                                <option value="1">CJ대한통운</option>
+      
+                            </select>
+                        </div>
+                        <div class="mt-1">
+                            <select name="carrier" id="carrier" class="text-sm w-full">
+                                <option value="">특송사</option>
+                                <option value="0">판토스</option>
+                                <option value="1">대한통운</option>
+        
+                            </select>
+                        </div>
+                        <div class="mt-1">
+                            <select name="day1" id="day1" class="text-sm w-full">
+                                <option value="">비행도착요일</option>
+                                <option value="1">월요일</option>
+                                <option value="2">화요일</option>
+                                <option value="3">수요일</option>
+                                <option value="4">목요일</option>
+                                <option value="5">금요일</option>
+                                <option value="6">토요일</option>
+                                <option value="0">일요일</option>
+      
+                            </select>
+                        </div>
+                        <div class="mt-1">
+                            <select name="arrival_time" id="arrival_time" class="text-sm w-full">
+                                <option value="">비행도착시간</option>
+                                <option value="900">09:00</option>
+                                <option value="1200">12:00</option>
+                                <option value="1500">15:00</option>
+                                <option value="1800">18:00</option>
+                                <option value="2100">21:00</option>     
+                            </select>
+                        </div>
+                        <div class="mt-1">
+                            <select name="destination" id="destination" class="text-sm w-full">
+                                <option value="">도착지</option>
+                                <option value="0">부산</option>
+                                <option value="1">광주</option>
+                                <option value="2">서울</option>
+                                <option value="3">제주도</option>
+    
+                            </select>
+                        </div>
+           
+                        <div class="mt-1">
+                            <select name="day2" id="day2" class="text-sm w-full">
+                                <option value="">소포도착예정요일</option>
+                                <option value="1">월요일</option>
+                                <option value="2">화요일</option>
+                                <option value="3">수요일</option>
+                                <option value="4">목요일</option>
+                                <option value="5">금요일</option>
+                                <option value="6">토요일</option>
+                                <option value="0">일요일</option>     
+                            </select>
+                        </div>
+                        <button class="bg-green-400 text-white px-4 border rounded-sm mt-2 w-full">조회</button>
+                        
+                    </form>
+                    <div class="flex flex-col items-center w-full">
+                        <div class="text-purple-600 font-semibold">결과</div>
+                        <div class="result-select"></div>
+                        <div>{{day1}} 
+                        {% if day1 is not null %}
+                                    부터
+                        {% endif %}
+                              {{result}}</div>
+                        <div>걸린시간 : {{interval|floatformat:"1"}}초</div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="mt-1">
+                        <form>
+                            <input class="w-full" value={{code}} name="code" placeholder="송장번호를 입력해주세요."/>
+                            <button>조회</button>
+                        </form>
+                        
+                        
+                </div>
+            </div>
+            
             <div class="bg-gray-200 m-2 pb-8">
                 <div class="ml-4 text-2xl font-bold">
                     총 상품금액
@@ -196,15 +218,15 @@
                 <div >
                     <form>
                         <div class="flex justify-between mx-2 mt-4 price">
-                            <div>상품옵션</div>
-                            <div>
-                                <div class="js-count flex justify-center">
-                                    <div class="js-minus">-</div>
+                            <div  class="w-1/4 text-sm">상품옵션</div>
+                            <div class="w-1/2">
+                                <div class="js-count flex justify-start">
+                                    <div class="js-minus bg-white mx-1 px-2 rounded-lg hover:bg-green-400">-</div>
                                     <input class="text-center" value="{{count}}"name="count">
-                                    <div class="js-plus">+</div>
+                                    <div class="js-plus bg-white mx-1 px-2 rounded-lg hover:bg-purple-600">+</div>
                                 </div>
                             </div>
-                            <div class="flex justify-end">
+                            <div class="flex justify-end w-1/4 text-sm">
                                 <div>
                                     총 상품금액:
                                 </div>
@@ -257,10 +279,23 @@
     const input=count.querySelector("input")
     const price=document.querySelector(".price")
     const result=document.querySelector(".js-result")
+    // selected option result
+    const shipping=document.querySelector("#shipping")
+
+    console.log(shipping.option)
 
     let counter=0
 
     const discountPrice=parseInt(price.innerText.replace(",",""))
+
+    console.log("10000".split(""))
+
+    const array="10000".split("")
+
+ 
+    const list=array.map((x)=>x+",")
+    
+    console.log(list)
 
     const clickPlusBtn=(e)=>{
         
@@ -268,6 +303,7 @@
         counter=counter+1
         input.value=counter
         result.innerText=`${counter*discountPrice} 원`
+        
         
     }
 

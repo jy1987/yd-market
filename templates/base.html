@@ -13,14 +13,14 @@
     <title>{% block page_name %} {% endblock page_name %}</title>
   </head>
   <body class="text-gray-800 mt-48">
-    <header class="container max-w-full top-0 fixed bg-white">
-      <div class="flex justify-around text-sm bg-purple-800 text-gray-100">
-        <div>
-          <a class="flex m-2 items-center" href="#">즐겨찾기</a>
+    <header class="w-full top-0 fixed bg-white">
+      <div class="container mx-auto flex justify-between text-sm bg-purple-800 text-gray-100">
+        <div class="w-1/4 mx-4">
+          <a class="flex m-2 justify-start items-center" href="#">즐겨찾기</a>
         </div>
         <div></div>
-        <div>
-          <ul class="flex items-center">
+        <div class="w-1/4 mx-4">
+          <ul class="flex justify-end items-center">
             <li class="m-2">
               <a href="#">로그인</a>
             </li>
@@ -51,7 +51,7 @@
 
       const clickChange=()=>{
         
-        front.classList.toggle("hidden")
+        //front.classList.toggle("hidden")
         back.forEach((x)=>x.classList.toggle("hidden"))
         
         

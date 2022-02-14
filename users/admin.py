@@ -18,16 +18,31 @@ class CustomUserAdmin(UserAdmin):
     """custom User Admin"""
 
     fieldsets = UserAdmin.fieldsets + (
-        ("customs", {"fields": ("avatar", "gender", "superhost")}),
+        (
+            "customs",
+            {
+                "fields": (
+                    "avatar",
+                    "gender",
+                    "superhost",
+                    "nation",
+                    "brand",
+                    "categories",
+                )
+            },
+        ),
     )
 
-    inlines = (RoomInline,)
+    # inlines = (RoomInline,)
 
     list_display = (
         "username",
         "user_img",
         "gender",
         "superhost",
+        "nation",
+        "brand",
+        "categories",
     )
 
     def user_img(self, obj):

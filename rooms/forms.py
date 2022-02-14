@@ -4,7 +4,7 @@ from rooms import models as room_models
 
 class SearchForm(forms.Form):
 
-    name = forms.CharField(required=False, label="상품명")
+    name = forms.CharField(required=False, label="검색어")
     nation = forms.ModelChoiceField(
         required=False, queryset=room_models.Nation.objects.all(), label="국가"
     )
