@@ -5,4 +5,5 @@ app_name = "users"
 
 urlpatterns = [
     path("<int:pk>", views.RecommendView.as_view(), name="recommend"),
+    path("login", views.LoginView.as_view(), name="login"),
 ]

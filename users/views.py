@@ -2,8 +2,27 @@ from django.shortcuts import render
 from django.views.generic import View, DetailView
 from users import models as user_models
 from rooms import models as room_models
+from users import forms
 
 # Create your views here.
+
+
+class LoginView(View):
+    def get(self, request):
+        form = forms.LoginForm()
+        return render(request, "users/login.html", context={"form": form})
+
+    def post(self, request):
+        form = forms.LoginForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            print(email, password)
+
+        return render(request, "users/login.html", context={"form": form})
+
+
 class RecommendView(DetailView):
     model = user_models.User
     template_name = "users/recommend.html"

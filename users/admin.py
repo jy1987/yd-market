@@ -38,6 +38,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = (
         "username",
         "user_img",
+        "email",
         "gender",
         "superhost",
         "nation",
