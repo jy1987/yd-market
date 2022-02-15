@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, DetailView
+from django.views.generic.edit import FormView, FormView
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from users import models as user_models
 from rooms import models as room_models
 from users import forms
@@ -32,6 +33,27 @@ class LoginView(View):
 def log_out(request):
     logout(request)
     return redirect(reverse("core:home"))
+
+
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+
+    success_url = reverse_lazy(
+        "core:home",
+    )
+
+    def form_valid(self, form):
+        form.save()
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+        pk = user.id
+        print(pk)
+        if user is not None:
+            login(self.request, user)
+            return redirect(reverse("users:recommend", args=[pk]))
+        return super().form_valid(form)
 
 
 class RecommendView(DetailView):

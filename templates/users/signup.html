@@ -2,7 +2,7 @@
 
 
 {% block page_name %}
-    Login
+    SignUp
 {% endblock page_name %}
 
 
@@ -13,10 +13,10 @@
     
 {% block content %}
 
-    <form method="POST" action="{% url "users:login" %}">
+    <form method="POST" action="{% url "users:signup" %}">
         {% csrf_token %}
         {{form.as_p}}
-        <button>로그인</button>
+        <button>회원가입</button>
     </form>
 
 
