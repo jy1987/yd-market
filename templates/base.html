@@ -21,9 +21,18 @@
         <div></div>
         <div class="w-1/4 mx-4">
           <ul class="flex justify-end items-center">
+            
+            {% if user.is_authenticated %}
+            <li class="m-2">
+              <a href="{% url "users:logout" %}">로그아웃</a>
+            </li>
+            {% else %}
             <li class="m-2">
               <a href="{% url "users:login" %}">로그인</a>
             </li>
+            {% endif %}
+              
+           
             <li class="m-2">
               <a href="#">회원가입</a>
             </li>

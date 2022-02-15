@@ -2,7 +2,7 @@
 
 {% block page_name %} 
 
-Home | dy networks
+{{user}}의 추천페이지 | dy networks
 
 {% endblock page_name %} 
 
@@ -13,6 +13,7 @@ Home | dy networks
 
     </div>
     <div class="py-4 ml-2">
+        <div>{{user}}님의 추천상품 페이지</div>
         <span>총 </span><span class="text-purple-600">{{rooms|length}}</span><span>개</span>
         
         {% for b in brand  %}

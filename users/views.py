@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View, DetailView
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 from users import models as user_models
 from rooms import models as room_models
 from users import forms
@@ -15,12 +17,21 @@ class LoginView(View):
     def post(self, request):
         form = forms.LoginForm(request.POST)
         print(form.is_valid())
+        print(form.cleaned_data)
         if form.is_valid():
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
-            print(email, password)
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse("users:recommend", args=[user.id]))
 
         return render(request, "users/login.html", context={"form": form})
+
+
+def log_out(request):
+    logout(request)
+    return redirect(reverse("core:home"))
 
 
 class RecommendView(DetailView):
